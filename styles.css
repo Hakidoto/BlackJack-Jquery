@@ -64,7 +64,7 @@ body {
     position: absolute;
     top: 30%;
     left: 50%;
-    transform: -50%, 50%;
+    transform: translate(-50%, 50%);
     max-width: 50%;
     max-height: 50%;
     background: rgb(44,59,80);
@@ -84,7 +84,7 @@ button{
 }
 
 @media(max-width: 1000px){
-    
+
     #mensajeGanador{
         font-size: 6vw;
         transform: translate(-50%, 150%);
