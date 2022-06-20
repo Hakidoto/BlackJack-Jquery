@@ -1,0 +1,92 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #1f513b;
+    background: linear-gradient(to top right, #1f513b, #0F2725) fixed;
+}
+
+.header {
+    display: flex;
+    height: 70px;
+    width: 100%;
+    text-align: center;
+    background: black;
+    color: white;
+}
+
+.header h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    padding: 4 10 0 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+#cartasJugador,
+#cartasComputadora {
+    margin-left: 5vw;
+}
+
+#cartasJugador img,
+#cartasComputadora img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    left: 5vw;
+    margin-left: -5vw;
+}
+
+.logo{
+    display: flex;
+    margin-block-start: 3px;
+    margin-block-end: 3px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.logo img{
+    margin: 0px 0px 0px 0px;
+    display: flex;
+    height: 60px;
+    width: 60px;
+    padding: 0px;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+.hidden{
+    display: none;
+}
+
+#mensajeGanador{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: -50%, 50%;
+    max-width: 50%;
+    max-height: 50%;
+    background: rgb(44,59,80);
+    background: linear-gradient(90deg, rgba(44,59,80,1) 0%, rgba(14,14,36,1) 35%, rgba(81,86,87,1) 100%);
+    color: white;
+    font-size: 3vw;
+    text-align: center;
+    line-height: 8vw;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.482);
+    border-radius: 10px;
+    opacity: 0.9;
+}
+
+button{
+    vertical-align: bottom;
+    width: 250px;
+}
+
+@media(max-width: 1000px){
+    
+    #mensajeGanador{
+        font-size: 6vw;
+        transform: translate(-50%, 150%);
+    }
+}

@@ -1,0 +1,136 @@
+let TotalPtsJugador = 0;
+let TotalPtsComputadora = 0;
+let cartas = [];
+let carta;
+const naipes = ['K', 'Q', 'J', 'A'];
+
+$(document).ready(function () {
+    console.log("ready!");
+    $('#cartasComputadora').html($('#cartasComputadora').html() + `<img class='dummypic' style='max-width:15%' src='./imagenes/cartas/grey_back.png'>`);
+    AddCartaInicial();
+});
+
+
+CrearBaraja();
+
+$('#btn-nuevo').click(function () {
+    IniciarJuego();
+});
+
+$('#btn-carta').click(function () {
+    turnoJugador();
+});
+
+$('#btn-detener').click(function () {
+    $('#btn-carta').attr('disabled', 'true');
+    $('#btn-detener').attr('disabled', 'true');
+    SwitchCard();
+    turnoComputadora();
+})
+
+function IniciarJuego() {
+    $('#cartasJugador').html('');
+    $('#cartasComputadora').html('');
+    console.clear();
+    CrearBaraja();
+    TotalPtsComputadora = 0;
+    TotalPtsJugador = 0;
+    $('#puntosJugador').text(TotalPtsJugador);
+    $('#puntosComputadora').text(TotalPtsComputadora);
+    $('#btn-carta').removeAttr('disabled');
+    $('#btn-detener').removeAttr('disabled');
+    $('#mensajeGanador').addClass('hidden');
+    $('#cartasComputadora').html($('#cartasComputadora').html() + `<img class='dummypic' style='max-width:15%' src='./imagenes/cartas/grey_back.png'>`);
+    AddCartaInicial();
+}
+
+function AddCartaInicial() {
+    carta = cartas.shift();
+    $('#cartasComputadora').html($('#cartasComputadora').html() + `<img style='max-width:15%' src='./imagenes/cartas/${carta}.png'>`);
+    TotalPtsComputadora += valor(carta);
+    $('#puntosComputadora').text(TotalPtsComputadora);
+}
+
+function SwitchCard() {
+    carta = cartas.shift();
+    $(".dummypic").attr('src', `./imagenes/cartas/${carta}.png`);
+    TotalPtsComputadora += valor(carta);
+    $('#puntosComputadora').text(TotalPtsComputadora);
+}
+
+function CrearBaraja() {
+    cartas = [];
+    const numeros = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const figuras = ['J', 'Q', 'K', 'A'];
+    const palos = ['C', 'D', 'H', 'S'];
+
+    for (const n of numeros) {
+        for (const p of palos) {
+            cartas.push(n + p);
+        }
+    }
+    figuras.forEach((l) => {
+        palos.forEach((p) => {
+            cartas.push(l + p);
+        })
+    })
+
+    cartas = _.shuffle(cartas)
+    console.log(cartas);
+}
+
+function valor(carta) {
+    let valorCarta = carta.substring(0, carta.length - 1);
+
+    if (naipes.includes(valorCarta) && valorCarta === 'A') {
+        return (valorCarta === 'A' && (TotalPtsComputadora > 21 || TotalPtsJugador > 21)) ? 1 : 11;
+    }
+    else if (naipes.includes(valorCarta) && valorCarta != 'A') {
+        return valorCarta = 10
+    }
+    else {
+        return parseInt(valorCarta);
+    }
+}
+
+function turnoJugador() {
+    carta = cartas.shift();
+    $('#cartasJugador').html($('#cartasJugador').html() + `<img style='max-width:15%' src='./imagenes/cartas/${carta}.png'>`);
+
+    TotalPtsJugador += valor(carta);
+    $('#puntosJugador').text(TotalPtsJugador);
+
+    if (TotalPtsJugador > 21) {
+        $('#btn-carta').attr('disabled', 'true');
+        $('#btn-detener').attr('disabled', 'true');
+        SwitchCard();
+        turnoComputadora();
+    }
+}
+
+function turnoComputadora() {
+    let ganaJugador = true;
+    do {
+        carta = cartas.shift();
+        $('#cartasComputadora').html($('#cartasComputadora').html() + `<img style='max-width:15%' src='./imagenes/cartas/${carta}.png'>`);
+
+        TotalPtsComputadora += valor(carta);
+        $('#puntosComputadora').text(TotalPtsComputadora);
+        if (TotalPtsJugador > 21) {
+            ganaJugador = false;
+            mensajeJugador(ganaJugador ? 'El jugador gana' : 'La CPU gana');
+            break;
+        }
+    } while (TotalPtsComputadora <= 21 && TotalPtsComputadora < TotalPtsJugador);
+
+    if (TotalPtsComputadora <= 21 && TotalPtsComputadora >= TotalPtsComputadora) {
+        ganaJugador = false;
+        mensajeJugador(ganaJugador ? 'El jugador gana' : 'La CPU gana');
+    }
+    mensajeJugador(ganaJugador ? 'El jugador gana' : 'La CPU gana');
+
+    function mensajeJugador(mensajeJugador) {
+        $('#mensajeGanador').text(mensajeJugador)
+        $('#mensajeGanador').removeClass('hidden');
+    }
+}
